@@ -1,0 +1,14 @@
+{
+  "name": "solar-magic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "bucketofwetsocks",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^13.1.2"
+  }
+}
