@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "ng": "ng"
   },
   "author": "bucketofwetsocks",
   "license": "ISC",
