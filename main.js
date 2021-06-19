@@ -6,7 +6,7 @@ function createWindow () {
       height: 600
     });
   
-    win.loadFile('index.html');
+    win.loadFile('./solar-magic/dist/solar-magic/index.html');
 }
 
 app.whenReady().then(() => {
