@@ -22,8 +22,9 @@ function createWindow () {
     });
   
     const win = new BrowserWindow({
-      width: 800,
-      height: 600
+      width: 1200,
+      height: 600,
+      icon: './resources/icon.png'
     });
   
     win.loadFile('./index.html');

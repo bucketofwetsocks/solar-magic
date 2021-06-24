@@ -14,7 +14,9 @@ export class MusicComponent implements OnInit {
 
   ngOnInit(): void {
     this.musicService.searchMusic('', '', '', 1)
-      .subscribe();
+      .subscribe((music) => {
+        console.dir(music);
+      });
   }
 
 }
