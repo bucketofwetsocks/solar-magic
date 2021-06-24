@@ -9,14 +9,14 @@ function createWindow () {
     // this is to edit the relative pathing, to allow the index.html
     // file to be in angular's dist directory instead.
     electron.protocol.interceptFileProtocol(PROTOCOL, (request, callback) => {
-        // // Strip protocol
+        // Strip protocol
         let url = request.url.substr(PROTOCOL.length + 1);
+
         // Build complete path for node require function
         const filename = path.basename(url);
         url = path.join(__dirname, WEB_FOLDER, filename);
 
         // Replace backslashes by forward slashes (windows)
-        // url = url.replace(/\\/g, '/');
         url = path.normalize(url);
         callback({path: url});
     });
@@ -36,7 +36,6 @@ app.whenReady().then(() => {
         if (BrowserWindow.getAllWindows().length === 0)
             createWindow()
     });
-    
 });
 
 app.on('window-all-closed', function () {
