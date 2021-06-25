@@ -22,6 +22,8 @@ export class WorkspaceService {
   };
 
   constructor() {
+    console.log(`workspace.service: working directory: ${__dirname}`);
+
     this.load();
     // if we couldn't load the workspace,
     // like, it's the firs time loading up the app,
@@ -54,5 +56,13 @@ export class WorkspaceService {
       console.dir(contents);
       this.workspaceConfig = JSON.parse(contents);
     });
+  }
+
+  /**
+   * initializes a new workspace.  this creates a number of folders, files, and downloads
+   * certain dependencies, like ASAR or AddMusicK.  
+   */
+  public new() {
+
   }
 }

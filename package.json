@@ -9,7 +9,7 @@
     "build": "node scripts/build.js",
     "clean": "rm -rf node_modules && rm package-lock.json && cd solar-magic && rm -rf node_modules && rm package-lock.json",
     "install": "cd solar-magic && npm i",
-    "deploy": "electron-packager . --out dist"
+    "deploy": "electron-packager . --out dist --overwrite"
   },
   "author": "bucketofwetsocks",
   "license": "ISC",
