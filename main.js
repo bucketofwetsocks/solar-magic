@@ -24,7 +24,11 @@ function createWindow () {
     const win = new BrowserWindow({
       width: 1200,
       height: 600,
-      icon: './resources/icon.png'
+      icon: './resources/icon.png',
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+      }
     });
   
     win.loadFile('./index.html');
@@ -44,3 +48,9 @@ app.on('window-all-closed', function () {
         app.quit();
 });
 
+
+/** IPC Functions */
+// ipcMain.on("require-Fs", (event, path) => {
+//     win.webContents.send("require-Fs-response", require('fs'));
+// });
+  

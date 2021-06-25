@@ -10,6 +10,7 @@ import { MusicService } from './music.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './loader/loader.component';
 import { FormsModule, NgModel } from '@angular/forms';
+import { WorkspaceService } from './workspace.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FormsModule, NgModel } from '@angular/forms';
     FormsModule
   ],
   providers: [
-    MusicService
+    MusicService,
+    WorkspaceService
   ],
   bootstrap: [AppComponent]
 })
