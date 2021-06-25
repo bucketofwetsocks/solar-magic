@@ -11,4 +11,5 @@ export interface MusicResult {
     rating: string;
     size: string;
     downloadLink: string;
+    spcId: string;
 }

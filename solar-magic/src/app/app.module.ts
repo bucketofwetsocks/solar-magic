@@ -8,13 +8,15 @@ import { NavComponent } from './nav/nav.component';
 import { MusicComponent } from './music/music.component';
 import { MusicService } from './music.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavComponent,
-    MusicComponent
+    MusicComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

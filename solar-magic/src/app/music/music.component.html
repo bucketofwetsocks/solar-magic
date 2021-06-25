@@ -1,1 +1,32 @@
-<p>music works!</p>
+<h2>Music</h2>
+<div class="divider"></div>
+
+<app-loader *ngIf="loading"></app-loader>
+
+<table *ngIf="!loading" class="highlight">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Duration</th>
+            <th>Description</th>
+            <th>Authors</th>
+            <th>Rating</th>
+            <th>Size</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of musicList">
+            <td>{{item.title}}</td>
+            <td>{{item.duration}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.authors}}</td>
+            <td>{{item.rating}}</td>
+            <td>{{item.size}}</td>
+            <td>
+                <i class="material-icons pointer" (click)="playSong(item)">play_arrow</i>
+            </td>
+        </tr>
+    </tbody>
+</table>
+

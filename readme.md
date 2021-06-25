@@ -10,5 +10,4 @@
 
 _Then, in another console window,_
 
- - `npm run build` (this copies a couple files into the dist directory.)
- - `npm start`
+ - `npm run build && npm start` (build copies some dependency files into the dist directory)

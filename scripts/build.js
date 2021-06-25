@@ -9,6 +9,9 @@ const path = require('path');
 const FILELIST = [
     './node_modules/materialize-css/dist/css/materialize.min.css',
     './node_modules/materialize-css/dist/js/materialize.min.js',
+    './node_modules/@smwcentral/spc-player/dist/spc.js',
+    './node_modules/@smwcentral/spc-player/dist/spc_player.css',
+    './node_modules/@smwcentral/spc-player/dist/spc.wasm',
 ];
 
 const DEST = `./solar-magic/dist/solar-magic`;

@@ -59,6 +59,7 @@ export class MusicService {
         rating: this.cleanString(tds[8].innerText),
         size: this.cleanString(tds[9].innerText),
         downloadLink: tds[10].querySelector('a').attributes['href'],
+        spcId: tds[0].querySelector('.cell-icon-wrapper a').attributes['data-spc-file']
       };
 
       music.push(result);
@@ -78,5 +79,14 @@ export class MusicService {
       .pipe(
         map((data: string) => this.parseResults(data))
       );
+  }
+
+  /**
+   * returns actual SPC data from a JSON object out in SMWCentral.
+   */
+  public getSPC(id:string) : Observable<any> {
+    return this.http.get(
+        `https://www.smwcentral.net/ajax.php?a=getfilepreview&s=smwmusic&id=${id}&index=0`,
+      )
   }
 }
