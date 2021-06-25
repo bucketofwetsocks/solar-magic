@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { MusicResult } from './models/MusicResult';
 import { map } from 'rxjs/operators'
 import { parse } from 'node-html-parser';
+import { MusicSearch } from './models/MusicSearch';
 
 /**
  * Handles searching for music out in smwcentral land.
@@ -33,8 +34,27 @@ export class MusicService {
   /**
    * parses out the HTML from SMWCentral and returns a MusicResult[].
    */
-  private parseResults(html: string): MusicResult[] {
+  private parseResults(html: string, page: number): MusicSearch {
     const root = parse(html);
+
+    // parse the table's metadata about pagination.
+    const result = {} as MusicSearch;
+    const stats = root.querySelectorAll('.stats');
+
+    const totalCount = parseInt(stats[2].innerText);
+    const maxCount = parseInt(stats[1].innerText);
+    const minCount = parseInt(stats[0].innerText);
+    let totalLoaded = maxCount - minCount + 1;
+    const totalPages = Math.ceil(totalCount / totalLoaded);
+    result.pagination = {
+      displayingMinNumber: parseInt(stats[0].innerText),
+      displayingMaxNumber: maxCount,
+      totalCount: totalCount,
+      requestedPage: page,
+      totalPages: totalPages
+    };
+
+    // parse the table out.
     const table = root.querySelector('#list_content');
 
     // remove the first tr, as it's nothing more than the header.
@@ -65,19 +85,20 @@ export class MusicService {
       music.push(result);
     }
 
-    return music;
+    result.results = music;
+    return result;
   }
 
   /**
    * perform an HTTP request to swmcentral and parse the music results.
    */
-  public searchMusic(name: string, tags: string, description: string, page: number) : Observable<MusicResult[]> {
+  public searchMusic(name: string, tags: string, description: string, page: number) : Observable<MusicSearch> {
     return this.http.get(
         `${this.ROOT_URL}&f%5Bname%5D=${name}&f%5Bauthor%5D=&f%5Btags%5D=${tags}&f%5Bfeatured%5D=&f%5Bdescription%5D=${description}&n=${page}`,
         {responseType: 'text'}
       )
       .pipe(
-        map((data: string) => this.parseResults(data))
+        map((data: string) => this.parseResults(data, page))
       );
   }
 

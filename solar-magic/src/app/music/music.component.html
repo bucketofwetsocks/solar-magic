@@ -3,6 +3,14 @@
 
 <app-loader *ngIf="loading"></app-loader>
 
+<ul *ngIf="!loading" class="pagination">
+    <li class="{{ musicSearch.pagination.requestedPage <= 1 ? 'disabled' : 'active pointer' }}" (click)="search(musicSearch.pagination.requestedPage - 1)"><a><i class="material-icons">chevron_left</i></a></li>
+    <ng-container *ngFor="let number of paginationList">
+        <li class="{{ musicSearch.pagination.requestedPage === number ? 'disabled' : 'active pointer' }}" (click)="search(number)"><a>{{number}}</a></li>
+    </ng-container>
+    <li class="{{ musicSearch.pagination.requestedPage >= musicSearch.pagination.totalPages ? 'disabled' : 'active pointer' }}" (click)="search(musicSearch.pagination.requestedPage + 1)"><a><i class="material-icons">chevron_right</i></a></li>
+</ul>
+
 <table *ngIf="!loading" class="highlight">
     <thead>
         <tr>
@@ -16,7 +24,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of musicList">
+        <tr *ngFor="let item of musicSearch.results">
             <td>{{item.title}}</td>
             <td>{{item.duration}}</td>
             <td>{{item.description}}</td>

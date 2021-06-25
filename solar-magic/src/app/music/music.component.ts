@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicResult } from '../models/MusicResult';
+import { MusicSearch } from '../models/MusicSearch';
 import { MusicService } from '../music.service';
 
 @Component({
@@ -8,21 +9,54 @@ import { MusicService } from '../music.service';
   styleUrls: ['./music.component.css']
 })
 export class MusicComponent implements OnInit {
-  public musicList: MusicResult[] = [];
+  public musicSearch = {} as MusicSearch;
   public loading: boolean = false;
+  public paginationList: number[] = [];
 
   constructor(
     private musicService: MusicService
   ) { }
 
-  public search() {
+  private generatePaginationList(searchResult: MusicSearch) {
+    const RADIUS = 4;
+    const MIN = 1;
+    const result = [];
+
+    // first go down
+    let current = searchResult.pagination.requestedPage - RADIUS;
+    while (current !== searchResult.pagination.requestedPage) {
+      if (current >= MIN)
+        result.push(current);
+      current++;
+    }
+
+    // now push the current page
+    result.push(current);
+    
+    // now go up
+    current++;
+    const end = current + RADIUS;
+    while (current !== end) {
+      if (current <= searchResult.pagination.totalPages)
+        result.push(current);
+      current++;
+    }
+
+    console.log(`music.component: pagination list: ${result}`);
+    console.log(`music.component: total pages: ${searchResult.pagination.totalPages}, total count: ${searchResult.pagination.totalCount}`);
+
+    this.paginationList = result;
+  }
+
+  public search(page: number) {
     console.log(`music.component: searching...`);
     this.loading = true;
-    this.musicService.searchMusic('', '', '', 1)
+    this.musicService.searchMusic('', '', '', page)
       .subscribe((music) => {
-        this.musicList = music;
+        this.generatePaginationList(music);
+        this.musicSearch = music;
         this.loading = false;
-        console.log(`music.component: Loaded Music: ${this.musicList.length}`);
+        console.log(`music.component: Loaded Music: ${this.musicSearch.results.length}`);
       });
   }
 
@@ -38,7 +72,7 @@ export class MusicComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.search();
+    this.search(1);
   }
 
 }
