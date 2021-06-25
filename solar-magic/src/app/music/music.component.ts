@@ -12,6 +12,10 @@ export class MusicComponent implements OnInit {
   public musicSearch = {} as MusicSearch;
   public loading: boolean = false;
   public paginationList: number[] = [];
+  
+  public filterName: string = '';
+  public filterDescription: string = '';
+  public filterTags: string = '';
 
   constructor(
     private musicService: MusicService
@@ -48,10 +52,13 @@ export class MusicComponent implements OnInit {
     this.paginationList = result;
   }
 
-  public search(page: number) {
+  public search(page?: number) {
     console.log(`music.component: searching...`);
+    if (!page)
+      page = 1;
+
     this.loading = true;
-    this.musicService.searchMusic('', '', '', page)
+    this.musicService.searchMusic(this.filterName, this.filterDescription, this.filterTags, page)
       .subscribe((music) => {
         this.generatePaginationList(music);
         this.musicSearch = music;
@@ -69,6 +76,12 @@ export class MusicComponent implements OnInit {
         const spc = localwindow.SMWCentral.SPCPlayer;        
         spc.loadSong(data);
       });
+  }
+
+  public clear() {
+    this.filterTags = '';
+    this.filterDescription = '';
+    this.filterName = '';
   }
 
   ngOnInit(): void {

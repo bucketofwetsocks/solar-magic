@@ -1,9 +1,30 @@
 <h2>Music</h2>
-<div class="divider"></div>
 
+<div class="row">
+    <div class="input-field col s4">
+        <input placeholder="super metroid" type="text" [(ngModel)]="filterName">
+        <label for="first_name" class="active">Title</label>
+    </div>
+    <div class="input-field col s4">
+        <input placeholder="environment" type="text" [(ngModel)]="filterDescription">
+        <label for="first_name" class="active">Description</label>
+    </div>
+    <div class="input-field col s4">
+        <input placeholder="creepy" type="text" [(ngModel)]="filterTags">
+        <label for="first_name" class="active">Tags</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12 item-row">
+        <a class="waves-effect waves-light btn" (click)="clear()">Clear</a>
+        <a class="waves-effect waves-light btn" (click)="search()">Search</a>
+    </div>
+</div>
+
+<div class="divider"></div>
 <app-loader *ngIf="loading"></app-loader>
 
-<ul *ngIf="!loading" class="pagination">
+<ul *ngIf="!loading" class="pagination item-row">
     <li class="{{ musicSearch.pagination.requestedPage <= 1 ? 'disabled' : 'active pointer' }}" (click)="search(musicSearch.pagination.requestedPage - 1)"><a><i class="material-icons">chevron_left</i></a></li>
     <ng-container *ngFor="let number of paginationList">
         <li class="{{ musicSearch.pagination.requestedPage === number ? 'disabled' : 'active pointer' }}" (click)="search(number)"><a>{{number}}</a></li>

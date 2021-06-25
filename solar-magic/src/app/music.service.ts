@@ -15,7 +15,7 @@ import { MusicSearch } from './models/MusicSearch';
   providedIn: 'any'
 })
 export class MusicService {
-  private readonly ROOT_URL = `https://www.smwcentral.net/?p=section&s=smwmusic`;
+  private readonly ROOT_URL = `https://www.smwcentral.net/?p=section&s=smwmusic&o=name&d=asc`;
 
   constructor(
     private http: HttpClient
@@ -26,6 +26,8 @@ export class MusicService {
    * This just removes all of that.
    */
   private cleanString(val: string): string {
+    if (!val)
+      return val;
     return val
       .replace(/\n/g, '')
       .replace(/\t/g, '')
@@ -67,19 +69,19 @@ export class MusicService {
     for (const item of items) {
       const tds = item.querySelectorAll('td');
       const result: MusicResult = {
-        title: this.cleanString(tds[0].querySelector('.cell-icon-aside a').innerText),
-        link: tds[0].querySelector('.cell-icon-aside a').attributes['href'],
-        type: this.cleanString(tds[1].innerText),
-        sampleUsage: this.cleanString(tds[2].innerText),
-        source: this.cleanString(tds[3].innerText),
-        duration: this.cleanString(tds[4].innerText),
-        featured: this.cleanString(tds[5].innerText),
-        description: this.cleanString(tds[6].innerText),
-        authors: this.cleanString(tds[7].querySelector('.un-outer a').innerText),
-        rating: this.cleanString(tds[8].innerText),
-        size: this.cleanString(tds[9].innerText),
-        downloadLink: tds[10].querySelector('a').attributes['href'],
-        spcId: tds[0].querySelector('.cell-icon-wrapper a').attributes['data-spc-file']
+        title: this.cleanString(tds[0]?.querySelector('.cell-icon-aside a')?.innerText),
+        link: tds[0]?.querySelector('.cell-icon-aside a')?.attributes['href'],
+        type: this.cleanString(tds[1]?.innerText),
+        sampleUsage: this.cleanString(tds[2]?.innerText),
+        source: this.cleanString(tds[3]?.innerText),
+        duration: this.cleanString(tds[4]?.innerText),
+        featured: this.cleanString(tds[5]?.innerText),
+        description: this.cleanString(tds[6]?.innerText),
+        authors: this.cleanString(tds[7]?.querySelector('.un-outer a')?.innerText),
+        rating: this.cleanString(tds[8]?.innerText),
+        size: this.cleanString(tds[9]?.innerText),
+        downloadLink: tds[10]?.querySelector('a')?.attributes['href'],
+        spcId: tds[0]?.querySelector('.cell-icon-wrapper a')?.attributes['data-spc-file']
       };
 
       music.push(result);

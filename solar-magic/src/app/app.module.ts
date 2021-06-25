@@ -9,6 +9,7 @@ import { MusicComponent } from './music/music.component';
 import { MusicService } from './music.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './loader/loader.component';
+import { FormsModule, NgModel } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LoaderComponent } from './loader/loader.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     MusicService

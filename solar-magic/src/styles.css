@@ -11,3 +11,7 @@ table {
 .pointer {
     cursor: pointer;
 }
+
+.item-row > *:not(:first-child) {
+    margin-left: 5px;
+}
