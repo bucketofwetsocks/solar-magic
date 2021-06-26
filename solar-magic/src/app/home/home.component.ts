@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   public workspaceChange: string = '';
   public currentLoadedWorkspace: string = '';
   public testNumber: number = 0;
+  public testFSNumber: number = 0;
 
   constructor(
     public workspaceService: WorkspaceService,
@@ -34,7 +35,8 @@ export class HomeComponent implements OnInit {
         console.log(`home.component: workspace loaded: ${workspace}`);
       });
 
-    this.testService.onChange.subscribe((num) => this.testNumber = num);
+    //this.testService.onChange.subscribe((num) => this.testNumber = num);
+    this.testService.onFSChange.subscribe((num) => this.testFSNumber = num);
   }
 
   public openGithub() {
