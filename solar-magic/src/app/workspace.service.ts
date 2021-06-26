@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { Workspace } from './models/Workspace';
 
 const fs = (<any>window).require('fs');
@@ -13,7 +13,7 @@ export class WorkspaceService {
   public workspaceConfig: Workspace | undefined ;
 
   // things we can subscribe to.
-  public onWorkspaceLoaded: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public onWorkspaceLoaded: ReplaySubject<string> = new ReplaySubject<string>();
 
   public readonly DEFAULT_CONFIG: Workspace = {
     currentWorkspace: undefined,

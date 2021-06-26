@@ -11,6 +11,14 @@
     </div>
 </div>
 
+<div *ngIf="currentLoadedWorkspace" class="row">
+    <div class="col s12">
+        <div class="card-panel green lighten-2">
+            Current workspace: {{currentLoadedWorkspace}}
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="input-field col s12">
         <input placeholder="C:\projects\..." type="text" [(ngModel)]="workspaceChange">
@@ -18,16 +26,20 @@
     </div>
 </div>
 
-<div class="row item-row">
-    <button class="waves-effect waves-light btn" (click)="loadWorkspace()">Load Workspace</button>
-    <button class="waves-effect waves-light btn" (click)="newWorkspace()">Create New Workspace</button>
+<div class="row">
+    <div class="col s12 item-row">
+        <button class="waves-effect waves-light btn" (click)="loadWorkspace()">Load Workspace</button>
+        <button class="waves-effect waves-light btn" (click)="newWorkspace()">Create New Workspace</button>
+    </div>
 </div>
 
 <div class="row">
-    <div class="divider"></div>
-    <p>Solar Magic is a tool designed to work hand-in-hand with Lunar Magic, and to provide some 
-        extra nice-to-have abilities.
-    </p>
-    <p>This project is open source and accepting reasonable pull requests.  <a (click)="openGithub()" class="pointer">The github can be found here.</a></p>
+    <div class="col s12">
+        <div class="divider"></div>
+        <p>Solar Magic is a tool designed to work hand-in-hand with Lunar Magic, and to provide some 
+            extra nice-to-have abilities.
+        </p>
+        <p>This project is open source and accepting reasonable pull requests.  <a (click)="openGithub()" class="pointer">The github can be found here.</a></p>
+    </div>
 </div>
 
