@@ -47,12 +47,7 @@ export class WorkspaceService {
    */
   public save() {
     const path = `${__dirname}/solar-magic.json`;
-    fs.writeFile(path, JSON.stringify(this.workspaceConfig), (err: string) => {
-      if (err) {
-        console.log(`workspace.service: error saving config file to '${path}'.`)
-        console.error(err);
-      }
-    });
+    fs.writeFileSync(path, JSON.stringify(this.workspaceConfig));
     console.log(`workspace.service: config saved. current workspace: ${this.workspaceConfig?.currentWorkspace}`);
   }
 
@@ -60,17 +55,17 @@ export class WorkspaceService {
    * loads basic config for the service.
    */
   public load(cb: (success: boolean) => void) {
-    const path = `${__dirname}/solar-magic.json`;
-    fs.readFile(path, 'utf8', (err: string, contents: string) => {
-      if (err) {
-        cb(false);
-        return;
-      }
+    try {
+      const path = `${__dirname}/solar-magic.json`;
+      const contents = fs.readFileSync(path, 'utf8');   
       this.workspaceConfig = JSON.parse(contents);
       this.loadWorkspace(this.workspaceConfig?.currentWorkspace);
       cb(true);
       console.log(`workspace.service: config loaded`);
-    });
+    }
+    catch (ex) {
+      cb(false);
+    }
   }
   
   /**
@@ -81,21 +76,21 @@ export class WorkspaceService {
       return;
     
     // first check if the path exists as a folder.
-    fs.access(path, (error: string) => {
-      if (error) {
-        throw new Error(`Directory ${path} does not exist.`);
-      } else {
-        console.log(`workspace.service.new: Folder '${path}' exists.`);
+    if (fs.existsSync(path)) {
+      console.log(`workspace.service.new: Folder '${path}' exists.`);
 
-        // after loading, set the value.
-        (<Workspace>this.workspaceConfig).currentWorkspace = path;
+      // after loading, set the value.
+      (<Workspace>this.workspaceConfig).currentWorkspace = path;
 
-        // save the current configuration, so we can auto-reload next time.
-        this.save();
-        if (this.workspaceConfig?.currentWorkspace)
-          this.onWorkspaceLoaded.next(this.workspaceConfig?.currentWorkspace);
-      }
-    });
+      // save the current configuration, so we can auto-reload next time.
+      this.save();
+      if (this.workspaceConfig?.currentWorkspace)
+        this.onWorkspaceLoaded.next(this.workspaceConfig?.currentWorkspace);
+
+    }
+    else {
+      throw new Error(`Directory ${path} does not exist.`);
+    }
   }
 
   /**
@@ -104,13 +99,11 @@ export class WorkspaceService {
    */
   public newWorkspace(path: string) {
     // first check if the path exists as a folder.
-    fs.access(path, (error: string) => {
-      if (error) {
-        throw new Error("Directory does not exist.");
-      } else {
-        console.log(`workspace.service.new: Folder '${path}' exists.`)
-      }
-    });
-
+    if (fs.existsSync(path)) {
+      console.log(`workspace.service.new: Folder '${path}' exists.`)
+    }
+    else {
+      throw new Error("Directory does not exist.");
+    }
   }
 }

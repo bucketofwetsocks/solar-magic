@@ -13,7 +13,6 @@ export class HomeComponent implements OnInit {
 
   public workspaceChange: string = '';
   public currentLoadedWorkspace: string = '';
-  public testNumber = 0;
 
   constructor(
     public workspaceService: WorkspaceService,
@@ -24,17 +23,13 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(`home.component: init.`);
-    // this.workspaceService.onWorkspaceLoaded
-    //   .subscribe((workspace) => {
-    //     this.currentLoadedWorkspace = workspace;
-    //     this.workspaceChange = workspace;
-    //     console.log(`home.component: workspace loaded: ${workspace}`);
-    //   });
+    this.workspaceService.onWorkspaceLoaded
+      .subscribe((workspace) => {
+        this.currentLoadedWorkspace = workspace;
+        this.workspaceChange = workspace;
+        console.log(`home.component: workspace loaded: ${workspace}`);
+      });
 
-    this.testService.onNumberChange.subscribe((num) => {
-      this.testNumber = num;
-      console.log(`TEST EMIT: ${num}`);
-    });
   }
 
   public openGithub() {
