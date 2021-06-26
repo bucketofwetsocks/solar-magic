@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { TestService } from '../test.service';
 import { WorkspaceService } from '../workspace.service';
 
 
@@ -14,9 +15,11 @@ export class HomeComponent implements OnInit {
 
   public workspaceChange: string = '';
   public currentLoadedWorkspace: string = '';
+  public testNumber: number = 0;
 
   constructor(
-    public workspaceService: WorkspaceService
+    public workspaceService: WorkspaceService,
+    public testService: TestService
   ) {
 
   }
@@ -30,6 +33,8 @@ export class HomeComponent implements OnInit {
         M.toast({html: 'Workspace Successfully Loaded!'});
         console.log(`home.component: workspace loaded: ${workspace}`);
       });
+
+    this.testService.onChange.subscribe((num) => this.testNumber = num);
   }
 
   public openGithub() {

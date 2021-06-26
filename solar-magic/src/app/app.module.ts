@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './loader/loader.component';
 import { FormsModule, NgModel } from '@angular/forms';
 import { WorkspaceService } from './workspace.service';
+import { TestService } from './test.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { WorkspaceService } from './workspace.service';
   ],
   providers: [
     MusicService,
-    WorkspaceService
+    WorkspaceService,
+    TestService
   ],
   bootstrap: [AppComponent]
 })
