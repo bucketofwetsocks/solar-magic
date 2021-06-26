@@ -1,4 +1,5 @@
 <div class="collection">
     <a routerLink="home" routerLinkActive="active" class="collection-item">Home</a>
-    <a routerLink="music" routerLinkActive="active" class="collection-item">Music</a>
+    <a *ngIf="currentLoadedWorkspace" routerLink="music" routerLinkActive="active" class="collection-item">Music</a>
+    <a *ngIf="!currentLoadedWorkspace" class="collection-item disabled">Music</a>
 </div>

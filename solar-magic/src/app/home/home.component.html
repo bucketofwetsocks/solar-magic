@@ -1,7 +1,29 @@
 <div class="row">
     <h2>Welcome!</h2>
+</div>
+
+<div *ngIf="!currentLoadedWorkspace" class="row">
+    <b>It looks like a workspace has not yet been loaded into Solar Magic. 
+        You can open a workspace or create a new one.</b>
+</div>
+
+<div class="row">
+    <div class="input-field col s12">
+        <input placeholder="C:\projects\..." type="text" [(ngModel)]="workspaceChange">
+        <label for="first_name" class="active">Absolute path to your SMW file</label>
+    </div>
+</div>
+
+<div class="row item-row">
+    <button class="waves-effect waves-light btn" (click)="loadWorkspace()">Load Workspace</button>
+    <button class="waves-effect waves-light btn" (click)="newWorkspace()">Create New Workspace</button>
+</div>
+
+<div class="row">
+    <div class="divider"></div>
     <p>Solar Magic is a tool designed to work hand-in-hand with Lunar Magic, and to provide some 
         extra nice-to-have abilities.
     </p>
     <p>This project is open source and accepting reasonable pull requests.  <a (click)="openGithub()" class="pointer">The github can be found here.</a></p>
 </div>
+

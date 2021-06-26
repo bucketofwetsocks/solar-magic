@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WorkspaceService } from '../workspace.service';
 
 @Component({
   selector: 'app-nav',
@@ -6,10 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+  public currentLoadedWorkspace: string = '';
 
-  constructor() { }
+  constructor(
+    public workspaceService: WorkspaceService
+  ) {
+
+  }
 
   ngOnInit(): void {
+    this.workspaceService.onWorkspaceLoaded.subscribe((workspace) => {
+      this.currentLoadedWorkspace = workspace;
+      console.log(`nav.component: workspace loaded: ${workspace}`);
+    });
+
   }
 
 }
