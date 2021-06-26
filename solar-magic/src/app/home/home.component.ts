@@ -1,10 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { TestService } from '../test.service';
+import { Component, OnInit } from '@angular/core';
 import { WorkspaceService } from '../workspace.service';
 
-
 const exec = (<any>window).require('child_process').exec;
-const M = (<any>window).M;
 
 @Component({
   selector: 'app-home',
@@ -15,12 +12,9 @@ export class HomeComponent implements OnInit {
 
   public workspaceChange: string = '';
   public currentLoadedWorkspace: string = '';
-  public testNumber: number = 0;
-  public testFSNumber: number = 0;
 
   constructor(
-    public workspaceService: WorkspaceService,
-    public testService: TestService
+    public workspaceService: WorkspaceService
   ) {
 
   }
@@ -31,18 +25,13 @@ export class HomeComponent implements OnInit {
       .subscribe((workspace) => {
         this.currentLoadedWorkspace = workspace;
         this.workspaceChange = workspace;
-        M.toast({html: 'Workspace Successfully Loaded!'});
         console.log(`home.component: workspace loaded: ${workspace}`);
       });
-
-    //this.testService.onChange.subscribe((num) => this.testNumber = num);
-    this.testService.onFSChange.subscribe((num) => this.testFSNumber = num);
   }
 
   public openGithub() {
     exec("start https://github.com/bresheske/solar-magic");
   }
-
 
   public newWorkspace() {
     try {

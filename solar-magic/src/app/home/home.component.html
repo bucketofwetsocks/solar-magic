@@ -1,14 +1,14 @@
 <div class="row">
     <h2>Welcome!</h2>
-
-    <p>Banana: {{testNumber}}</p>
-    <p>BananaFS: {{testFSNumber}}</p>
-
 </div>
 
 <div *ngIf="!currentLoadedWorkspace" class="row">
-    <b>It looks like a workspace has not yet been loaded into Solar Magic. 
-        You can open a workspace or create a new one.</b>
+    <div class="col s12">
+        <div class="card-panel red lighten-2">
+            It looks like a workspace has not yet been loaded into Solar Magic. 
+            You can open a workspace or create a new one.
+        </div>
+    </div>
 </div>
 
 <div class="row">
