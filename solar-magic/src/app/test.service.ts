@@ -14,9 +14,10 @@ export class TestService {
   constructor() {
 
     setInterval(() => {
-      fs.access('./', (error: string) => {
-        this.onNumberChange.next(++this.num);
-      });
+      const me = this;
+      fs.existsSync('./');
+      me.onNumberChange.next(++this.num);
+      // fs.access('./', fs.constants.F_OK, (error: string) => {
     }, 5000);
   }
 }
