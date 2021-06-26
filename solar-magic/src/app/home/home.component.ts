@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TestService } from '../test.service';
 import { WorkspaceService } from '../workspace.service';
 
 const exec = (<any>window).require('child_process').exec;
@@ -12,6 +13,7 @@ export class HomeComponent implements OnInit {
 
   public workspaceChange: string = '';
   public currentLoadedWorkspace: string = '';
+  public testNumber = 0;
 
   constructor(
     public workspaceService: WorkspaceService
@@ -27,6 +29,11 @@ export class HomeComponent implements OnInit {
         this.workspaceChange = workspace;
         console.log(`home.component: workspace loaded: ${workspace}`);
       });
+
+    // this.testService.onNumberChange.subscribe((num) => {
+    //   console.log(`TEST EMIT: ${num}`);
+    //   this.testNumber = num;
+    // });
   }
 
   public openGithub() {

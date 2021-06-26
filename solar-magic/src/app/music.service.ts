@@ -12,7 +12,7 @@ import { MusicSearch } from './models/MusicSearch';
  * SMWCENTRAL API WHEN!?!?!?!?!
  */
 @Injectable({
-  providedIn: 'any'
+  providedIn: 'root'
 })
 export class MusicService {
   private readonly ROOT_URL = `https://www.smwcentral.net/?p=section&s=smwmusic&o=name&d=asc`;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { Workspace } from './models/Workspace';
 
 const fs = (<any>window).require('fs');
