@@ -16,13 +16,11 @@ export class HomeComponent implements OnInit {
   public currentLoadedWorkspace: string = '';
   public componentLoaded = false;
 
-  private changeDetection: ChangeDetectorRef;
-
   constructor(
     public workspaceService: WorkspaceService,
     public cd: ChangeDetectorRef
   ) {
-    this.changeDetection = cd;
+
   }
 
   ngOnInit(): void {
@@ -32,7 +30,7 @@ export class HomeComponent implements OnInit {
         this.workspaceChange = workspace;
         M.toast({html: 'Workspace Successfully Loaded!'});
         console.log(`home.component: workspace loaded: ${workspace}`);
-        this.changeDetection.detectChanges();
+        this.cd.detectChanges();
       });
       this.componentLoaded = true;
   }

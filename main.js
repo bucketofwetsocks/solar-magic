@@ -22,8 +22,8 @@ function createWindow () {
     });
   
     const win = new BrowserWindow({
-      width: 1200,
-      height: 600,
+      width: 1400,
+      height: 800,
       icon: './resources/icon.png',
       webPreferences: {
         nodeIntegration: true,

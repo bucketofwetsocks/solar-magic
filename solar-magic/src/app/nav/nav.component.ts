@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { WorkspaceService } from '../workspace.service';
 
 @Component({
@@ -8,9 +8,9 @@ import { WorkspaceService } from '../workspace.service';
 })
 export class NavComponent implements OnInit {
   public currentLoadedWorkspace: string = '';
-
   constructor(
-    public workspaceService: WorkspaceService
+    public workspaceService: WorkspaceService,
+    public cd: ChangeDetectorRef
   ) {
 
   }
@@ -19,6 +19,7 @@ export class NavComponent implements OnInit {
     this.workspaceService.onWorkspaceLoaded.subscribe((workspace) => {
       this.currentLoadedWorkspace = workspace;
       console.log(`nav.component: workspace loaded: ${workspace}`);
+      this.cd.detectChanges();
     });
 
   }
