@@ -16,24 +16,25 @@ export class HomeComponent implements OnInit {
   public testNumber = 0;
 
   constructor(
-    public workspaceService: WorkspaceService
+    public workspaceService: WorkspaceService,
+    public testService: TestService
   ) {
 
   }
 
   ngOnInit(): void {
     console.log(`home.component: init.`);
-    this.workspaceService.onWorkspaceLoaded
-      .subscribe((workspace) => {
-        this.currentLoadedWorkspace = workspace;
-        this.workspaceChange = workspace;
-        console.log(`home.component: workspace loaded: ${workspace}`);
-      });
+    // this.workspaceService.onWorkspaceLoaded
+    //   .subscribe((workspace) => {
+    //     this.currentLoadedWorkspace = workspace;
+    //     this.workspaceChange = workspace;
+    //     console.log(`home.component: workspace loaded: ${workspace}`);
+    //   });
 
-    // this.testService.onNumberChange.subscribe((num) => {
-    //   console.log(`TEST EMIT: ${num}`);
-    //   this.testNumber = num;
-    // });
+    this.testService.onNumberChange.subscribe((num) => {
+      this.testNumber = num;
+      console.log(`TEST EMIT: ${num}`);
+    });
   }
 
   public openGithub() {

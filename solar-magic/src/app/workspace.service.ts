@@ -13,7 +13,7 @@ export class WorkspaceService {
   public workspaceConfig: Workspace | undefined ;
 
   // things we can subscribe to.
-  public onWorkspaceLoaded: ReplaySubject<string> = new ReplaySubject<string>();
+  public onWorkspaceLoaded: ReplaySubject<string> = new ReplaySubject<string>(1);
 
   public readonly DEFAULT_CONFIG: Workspace = {
     currentWorkspace: undefined,
