@@ -3,7 +3,6 @@ import { ReplaySubject } from 'rxjs';
 import { Workspace } from './models/Workspace';
 
 const fs = (<any>window).require('fs');
-
 declare var __dirname: string;
 
 @Injectable({
@@ -13,7 +12,7 @@ export class WorkspaceService {
   public workspaceConfig: Workspace | undefined ;
 
   // things we can subscribe to.
-  public onWorkspaceLoaded: ReplaySubject<string> = new ReplaySubject<string>(1);
+  public onWorkspaceLoaded: ReplaySubject<string> = new ReplaySubject<string>();
 
   public readonly DEFAULT_CONFIG: Workspace = {
     currentWorkspace: undefined,

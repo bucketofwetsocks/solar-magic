@@ -47,7 +47,8 @@ export class MusicComponent implements OnInit {
     }
 
     console.log(`music.component: pagination list: ${result}`);
-    console.log(`music.component: total pages: ${searchResult.pagination.totalPages}, total count: ${searchResult.pagination.totalCount}`);
+    console.log(`music.component: pagination values: `);
+    console.dir(searchResult.pagination);
 
     this.paginationList = result;
   }

@@ -47,7 +47,11 @@ export class MusicService {
     const maxCount = parseInt(stats[1].innerText);
     const minCount = parseInt(stats[0].innerText);
     let totalLoaded = maxCount - minCount + 1;
-    const totalPages = Math.ceil(totalCount / totalLoaded);
+    let totalPages = Math.ceil(totalCount / totalLoaded);
+    // a quick fix - since we don't know the exact number of results
+    // to be returned, we have to check for the last page. 
+    if (maxCount === totalCount)
+      totalPages = page;
     result.pagination = {
       displayingMinNumber: parseInt(stats[0].innerText),
       displayingMaxNumber: maxCount,
