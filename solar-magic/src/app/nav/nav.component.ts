@@ -9,8 +9,7 @@ import { WorkspaceService } from '../workspace.service';
 export class NavComponent implements OnInit {
   public currentLoadedWorkspace: string = '';
   constructor(
-    public workspaceService: WorkspaceService,
-    public cd: ChangeDetectorRef
+    public workspaceService: WorkspaceService
   ) {
 
   }
@@ -19,7 +18,6 @@ export class NavComponent implements OnInit {
     this.workspaceService.onWorkspaceLoaded.subscribe((workspace) => {
       this.currentLoadedWorkspace = workspace;
       console.log(`nav.component: workspace loaded: ${workspace}`);
-      this.cd.detectChanges();
     });
 
   }

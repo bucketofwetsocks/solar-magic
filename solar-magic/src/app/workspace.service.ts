@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Workspace } from './models/Workspace';
 
-const path = (<any>window).require('path');
 const fs = (<any>window).require('fs');
 
 declare var __dirname: string;
@@ -14,8 +13,7 @@ export class WorkspaceService {
   public workspaceConfig: Workspace | undefined ;
 
   // things we can subscribe to.
-  // note - ReplaySubjects don't have initial values.
-  public onWorkspaceLoaded: Subject<string> = new ReplaySubject<string>();
+  public onWorkspaceLoaded: Subject<string> = new Subject<string>();
 
   public readonly DEFAULT_CONFIG: Workspace = {
     currentWorkspace: undefined,
@@ -32,7 +30,7 @@ export class WorkspaceService {
     this.load((success) => {
       if (!success) {
         // if we couldn't load the workspace,
-        // like, it's the firs time loading up the app,
+        // like, it's the first time loading up the app,
         // then just add in some defaults and save the file.
         if (!this.workspaceConfig) {
           this.workspaceConfig = this.DEFAULT_CONFIG;

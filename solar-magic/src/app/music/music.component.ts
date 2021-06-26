@@ -18,8 +18,7 @@ export class MusicComponent implements OnInit {
   public filterTags: string = '';
 
   constructor(
-    private musicService: MusicService,
-    private cd: ChangeDetectorRef
+    private musicService: MusicService
   ) { }
 
   private generatePaginationList(searchResult: MusicSearch) {
@@ -59,13 +58,11 @@ export class MusicComponent implements OnInit {
       page = 1;
 
     this.loading = true;
-    this.cd.detectChanges();
     this.musicService.searchMusic(this.filterName, this.filterDescription, this.filterTags, page)
       .subscribe((music) => {
         this.generatePaginationList(music);
         this.musicSearch = music;
         this.loading = false;
-        this.cd.detectChanges();
         console.log(`music.component: Loaded Music: ${this.musicSearch.results.length}`);
       });
   }
@@ -85,7 +82,6 @@ export class MusicComponent implements OnInit {
     this.filterTags = '';
     this.filterDescription = '';
     this.filterName = '';
-    this.cd.detectChanges();
   }
 
   ngOnInit(): void {

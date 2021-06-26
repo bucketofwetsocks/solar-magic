@@ -14,25 +14,22 @@ export class HomeComponent implements OnInit {
 
   public workspaceChange: string = '';
   public currentLoadedWorkspace: string = '';
-  public componentLoaded = false;
 
   constructor(
-    public workspaceService: WorkspaceService,
-    public cd: ChangeDetectorRef
+    public workspaceService: WorkspaceService
   ) {
 
   }
 
   ngOnInit(): void {
+    console.log(`home.component: init.`);
     this.workspaceService.onWorkspaceLoaded
       .subscribe((workspace) => {
         this.currentLoadedWorkspace = workspace;
         this.workspaceChange = workspace;
         M.toast({html: 'Workspace Successfully Loaded!'});
         console.log(`home.component: workspace loaded: ${workspace}`);
-        this.cd.detectChanges();
       });
-      this.componentLoaded = true;
   }
 
   public openGithub() {
