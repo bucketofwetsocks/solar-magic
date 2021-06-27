@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FileService } from '../file.service';
+import { Component, OnInit } from '@angular/core';
+import { AddMusicKService } from '../add-music-k.service';
 import { MusicResult } from '../models/MusicResult';
 import { MusicSearch } from '../models/MusicSearch';
 import { MusicService } from '../music.service';
-import { WorkspaceService } from '../workspace.service';
 
 const M = (<any>window).M;
 const path = (<any>window).require('path');
@@ -22,11 +21,22 @@ export class MusicComponent implements OnInit {
   public filterDescription: string = '';
   public filterTags: string = '';
 
+  public originalMusicList: string[] = [];
+  public localMusicList: string[] = [];
+  public workspaceMusicList: string[] = [];
+
   constructor(
     private musicService: MusicService,
-    private fileService: FileService,
-    private workspaceService: WorkspaceService
+    private addMusicKService: AddMusicKService
   ) { }
+
+  ngOnInit(): void {
+    console.log(`music.component: init.`);
+    this.localMusicList = this.addMusicKService.getMusicList();
+    this.originalMusicList = this.addMusicKService.getOriginalsList();
+    this.workspaceMusicList = this.addMusicKService.getWorkspaceList();
+    this.search(1);
+  }
 
   private generatePaginationList(searchResult: MusicSearch) {
     const RADIUS = 4;
@@ -92,6 +102,7 @@ export class MusicComponent implements OnInit {
    */
   public downloadSong(item: MusicResult) {
     this.musicService.downloadSongIntoWorkspace(item);
+    this.workspaceMusicList = this.addMusicKService.getWorkspaceList();
     M.toast({html: `<span class="card-panel green lighten-2">File '<b>${item.title}</b>' downloaded to workspace.</span>`})
   }
 
@@ -101,9 +112,6 @@ export class MusicComponent implements OnInit {
     this.filterName = '';
   }
 
-  ngOnInit(): void {
-    console.log(`music.component: init.`);
-    this.search(1);
-  }
+
 
 }
