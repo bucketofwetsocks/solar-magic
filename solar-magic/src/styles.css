@@ -15,3 +15,8 @@ table {
 .item-row > *:not(:first-child) {
     margin-left: 5px;
 }
+
+.error-list > li {
+    list-style-type: disc !important;
+    list-style-position: inside;
+}

@@ -24,7 +24,7 @@
 <div class="row">
     <div class="input-field col s12">
         <input placeholder="C:\projects\..." type="text" [(ngModel)]="workspaceChange">
-        <label for="first_name" class="active">Absolute path to your SMW file</label>
+        <label for="some_input" class="active">Absolute path to your SMW file</label>
     </div>
 </div>
 
@@ -35,6 +35,29 @@
     </div>
 </div>
 
+<ng-container *ngIf="currentLoadedWorkspace">
+    <div class="row">
+        <div class="col s12">
+            <h3>Project Health</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <h4>Music</h4>
+            <div *ngIf="checkMusicErrors.length > 0" class="card-panel red lighten-2">
+                There's an issue with Music integration in your project.
+                <ul *ngFor="let error of checkMusicErrors" class="error-list">
+                    <li>{{error}}</li>
+                </ul>
+                <button class="waves-effect waves-light btn" (click)="buildMusicFolder()">Rebuild Music Folder</button>
+            </div>
+            <div *ngIf="checkMusicErrors.length === 0" class="card-panel green lighten-2">
+                Looks like you're good to go with music!
+            </div>
+        </div>
+    </div>
+</ng-container>
+
 <div class="row">
     <div class="col s12">
         <div class="divider"></div>
@@ -42,6 +65,8 @@
             extra nice-to-have abilities.
         </p>
         <p>This project is open source and accepting reasonable pull requests.  <a (click)="openGithub()" class="pointer">The github can be found here.</a></p>
+        <p>All data is received from swmcentral.com</p>
+        <p>The music player is courtesy of swmcentral.com</p>
     </div>
 </div>
 

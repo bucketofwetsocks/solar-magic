@@ -3,6 +3,8 @@ import { ReplaySubject } from 'rxjs';
 import { Workspace } from './models/Workspace';
 
 const fs = (<any>window).require('fs');
+const fse = (<any>window).require('fs-extra');
+const path = (<any>window).require('path');
 declare var __dirname: string;
 
 @Injectable({
@@ -105,4 +107,35 @@ export class WorkspaceService {
       throw new Error("Directory does not exist.");
     }
   }
+
+  /**
+   * check's the music folder for addMusicK, and overall health.
+   */
+  public checkMusicFolder(): string[] {
+    if (!this.workspaceConfig?.currentWorkspace)
+      return [];
+    const root = this.workspaceConfig?.currentWorkspace;
+    const musicFolder = path.normalize(this.workspaceConfig?.integrations.music.path.replace('{projectDir}', root));
+    const addMusicK = path.join(musicFolder, 'AddmusicK.exe');
+    const errors: string[] = [];
+    if (!fs.existsSync(musicFolder))
+      errors.push(`The music path '${musicFolder}' does not exist.`);
+    if (!fs.existsSync(addMusicK))
+      errors.push(`AddMusicK at location '${addMusicK}' does not exist.`);
+
+    return errors;
+  }
+
+  /**
+   * builds the music folder as needed.
+   */
+  public buildMusicFolder() {
+    if (!this.workspaceConfig?.currentWorkspace)
+      return;
+    const musicResourceFolder = path.join(__dirname, 'resources/workspaceTemplates/music');
+    const root = this.workspaceConfig?.currentWorkspace;
+    const dest =  path.normalize(this.workspaceConfig?.integrations.music.path.replace('{projectDir}', root));
+    fse.copySync(musicResourceFolder, dest);
+  }
+
 }

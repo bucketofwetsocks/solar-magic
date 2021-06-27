@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
   public workspaceChange: string = '';
   public currentLoadedWorkspace: string = '';
 
+  public checkMusicErrors: string[] = [];
+
   constructor(
     public workspaceService: WorkspaceService,
     public testService: TestService
@@ -27,6 +29,7 @@ export class HomeComponent implements OnInit {
       .subscribe((workspace) => {
         this.currentLoadedWorkspace = workspace;
         this.workspaceChange = workspace;
+        this.checkWorkspace();
         console.log(`home.component: workspace loaded: ${workspace}`);
       });
 
@@ -52,5 +55,14 @@ export class HomeComponent implements OnInit {
     catch (ex) {
       alert(ex);
     }
+  }
+
+  public checkWorkspace() {
+    this.checkMusicErrors = this.workspaceService.checkMusicFolder();
+  }
+
+  public buildMusicFolder() {
+    this.workspaceService.buildMusicFolder();
+    this.checkMusicErrors = this.workspaceService.checkMusicFolder();
   }
 }
