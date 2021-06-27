@@ -84,7 +84,7 @@ export class MusicService {
         authors: this.cleanString(tds[7]?.querySelector('.un-outer a')?.innerText),
         rating: this.cleanString(tds[8]?.innerText),
         size: this.cleanString(tds[9]?.innerText),
-        downloadLink: tds[10]?.querySelector('a')?.attributes['href'],
+        downloadLink: `https:${tds[10]?.querySelector('a')?.attributes['href']}`,
         spcId: tds[0]?.querySelector('.cell-icon-wrapper a')?.attributes['data-spc-file']
       };
 

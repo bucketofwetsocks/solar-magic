@@ -20,3 +20,7 @@ table {
     list-style-type: disc !important;
     list-style-position: inside;
 }
+
+.inline-list > * {
+    display: inline;
+}

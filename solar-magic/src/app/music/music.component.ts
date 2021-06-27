@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FileService } from '../file.service';
 import { MusicResult } from '../models/MusicResult';
 import { MusicSearch } from '../models/MusicSearch';
 import { MusicService } from '../music.service';
+import { WorkspaceService } from '../workspace.service';
 
 @Component({
   selector: 'app-music',
@@ -18,7 +20,9 @@ export class MusicComponent implements OnInit {
   public filterTags: string = '';
 
   constructor(
-    private musicService: MusicService
+    private musicService: MusicService,
+    private fileService: FileService,
+    private workspaceService: WorkspaceService
   ) { }
 
   private generatePaginationList(searchResult: MusicSearch) {
@@ -77,6 +81,11 @@ export class MusicComponent implements OnInit {
         const spc = localwindow.SMWCentral.SPCPlayer;        
         spc.loadSong(data);
       });
+  }
+
+  public downloadSong(item: MusicResult) {
+    console.log(`music.component: downloading item: ${item.downloadLink}`);
+    const zipfile = this.fileService.downloadFile(item.downloadLink, `${this.workspaceService.getMusicFolder()}/staging`);
   }
 
   public clear() {

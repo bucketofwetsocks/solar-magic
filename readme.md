@@ -1,3 +1,8 @@
+# Solar Magic
+Solar Magic is a windows 10 based app designed to work side-by-side with Lunar Magic, aiming to provide some nice-to-have features for SMW hacking projects.
+
+This application currently only supports windows 10 (and perhaps later). 
+
 # Dependencies:
 
  - NodeJS & NPM

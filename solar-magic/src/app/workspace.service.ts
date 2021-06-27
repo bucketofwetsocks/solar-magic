@@ -109,13 +109,22 @@ export class WorkspaceService {
   }
 
   /**
+   * just returns the music folder of the current workspace.
+   */
+  public getMusicFolder(): string {
+    if (!this.workspaceConfig?.currentWorkspace)
+      throw new Error(`getMusicFolder(): No music folder. Workspace not loaded.`);
+    const root = this.workspaceConfig?.currentWorkspace;
+    return path.normalize(this.workspaceConfig?.integrations.music.path.replace('{projectDir}', root));
+  }
+
+  /**
    * check's the music folder for addMusicK, and overall health.
    */
   public checkMusicFolder(): string[] {
     if (!this.workspaceConfig?.currentWorkspace)
       return [];
-    const root = this.workspaceConfig?.currentWorkspace;
-    const musicFolder = path.normalize(this.workspaceConfig?.integrations.music.path.replace('{projectDir}', root));
+    const musicFolder = this.getMusicFolder();
     const addMusicK = path.join(musicFolder, 'AddmusicK.exe');
     const errors: string[] = [];
     if (!fs.existsSync(musicFolder))

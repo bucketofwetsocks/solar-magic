@@ -52,8 +52,9 @@
             <td>{{item.authors}}</td>
             <td>{{item.rating}}</td>
             <td>{{item.size}}</td>
-            <td>
-                <i class="material-icons pointer" (click)="playSong(item)">play_arrow</i>
+            <td class="inline-list">
+                <i class="material-icons pointer" (click)="playSong(item)" title="play">play_arrow</i>
+                <i class="material-icons pointer" (click)="downloadSong(item)" title="download">file_download</i>
             </td>
         </tr>
     </tbody>
