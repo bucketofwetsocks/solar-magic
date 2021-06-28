@@ -77,7 +77,6 @@ export class AddMusicKService {
   public getMusicList(): string[] {
     const listfile = path.join(this.workspaceService.getMusicFolder(), 'Addmusic_list.txt');
     const contents = fs.readFileSync(listfile).toString();
-    console.dir(contents);
     const lines:string[] = contents.split(eol);
     // filter the lines to get rid of the labels and empty lines.
     const filtered = lines.filter((l) => /[0-9|a-f|A-F]{2}\s{2}.*/.test(l))
@@ -91,6 +90,9 @@ export class AddMusicKService {
     return cleaned;
   }
 
+  /**
+   * returns the list of music from the add musicK list file.
+   */
   public getWorkspaceList(): string[] {
     const musicFolder = path.join(this.workspaceService.getMusicFolder(), 'music');
     const textFiles = this.fileService.getOnlyFiles(musicFolder).filter((f) => f.endsWith('.txt'));
@@ -98,9 +100,54 @@ export class AddMusicKService {
     return fileNames;
   }
 
+  /**
+   * saves the list of music to the add musicK list file.
+   */
   public saveMusicList(music: string[]) {
-
+    const listfile = path.join(this.workspaceService.getMusicFolder(), 'Addmusic_list.txt');
+    // create a hexlist for indexes.
+    const numlist = Array.from({length:music.length},(v,k)=>k+1);
+    const hexlist = numlist.map((number) => {
+      let hexstr = number.toString(16);
+      if (hexstr.length === 1)
+        hexstr = '0' + hexstr;
+      return hexstr.toUpperCase();
+    });
+    // append the hex-index to each music item.
+    const indexedMusic = music.map((item, index) => `${hexlist[index]}  ${item}`);
+    // finally, we append the labels into the file.
+    indexedMusic.splice(0, 0, `Globals:`);
+    indexedMusic.splice(10, 0, `Locals:`);
+    fs.writeFileSync(listfile, indexedMusic.join(eol));
+    console.log(`addMusicK.service: wrote music list file with ${indexedMusic.length} items.`);
   }
 
-
+  /**
+   * runs addMusicK with the data previously stored in the music list file.
+   * returns the output from addMusicK.
+   */
+  public runAddMusicK(): { success: boolean, error: string } {
+    const musicFolder = this.workspaceService.getMusicFolder();
+    const rom = this.workspaceService.workspaceConfig?.currentWorkspace;
+    const command = `${musicFolder}/AddmusicK.exe ${rom}`;
+    const options = {
+      cwd: musicFolder
+    };
+    const result = execSync(command, options);
+    console.log(`addMusicK.service: run result: ${result}`);
+    const output = {
+      success: true,
+      error: '',
+    };
+    // parse the results into something a bit more 
+    if (/Your ROM is too small/.test(result)) {
+      output.success = false;
+      output.error = `Game ROM must be expanded before music can be added.`;
+    }
+    else if (/fail/.test(result)) {
+      output.success = false;
+      output.error = result;
+    }
+    return output;
+  }
 }

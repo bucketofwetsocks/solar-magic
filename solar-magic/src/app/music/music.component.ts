@@ -123,11 +123,18 @@ export class MusicComponent implements OnInit {
   }
 
   public save() {
-    
+    this.addMusicKService.saveMusicList(this.localMusicList);
   }
 
   public saveAndRun() {
-
+    this.save();
+    const result = this.addMusicKService.runAddMusicK();
+    if (result.success) {
+      M.toast({html: `<span class="card-panel green lighten-2">Music insertion was successful!</span>`})
+    }
+    else {
+      M.toast({html: `<span class="card-panel red lighten-2">${result.error}</span>`})
+    }
   }
 
 }
