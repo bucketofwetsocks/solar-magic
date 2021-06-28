@@ -133,21 +133,27 @@ export class AddMusicKService {
     const options = {
       cwd: musicFolder
     };
-    const result = execSync(command, options);
-    console.log(`addMusicK.service: run result: ${result}`);
-    const output = {
-      success: true,
-      error: '',
-    };
-    // parse the results into something a bit more 
-    if (/Your ROM is too small/.test(result)) {
-      output.success = false;
-      output.error = `Game ROM must be expanded before music can be added.`;
+    try {
+      const result = execSync(command, options);
+      console.log(`addMusicK.service: run result: ${result}`);
+      return {
+        success: true,
+        error: ''
+      };
     }
-    else if (/fail/.test(result)) {
-      output.success = false;
-      output.error = result;
+    catch (ex) {
+      const output = {
+        success: false,
+        error: '',
+      };
+      // parse the error into something a bit more friendly
+      if (/Your ROM is too small/.test(ex)) {
+        output.error = `Game ROM must be expanded before music can be added.`;
+      }
+      else {
+        output.error = ex;
+      }
+      return output;
     }
-    return output;
   }
 }
