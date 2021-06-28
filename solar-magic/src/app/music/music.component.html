@@ -6,21 +6,38 @@
 
 <div class="row">
     <div class="col s4">
-        <h4>Original Music</h4>
+        <h5>Original Music</h5>
         <ul class="collection small">
-            <li *ngFor="let music of originalMusicList" class="collection-item">{{music}}</li>
+            <li *ngFor="let music of originalMusicList; let i = index" class="collection-item truncate">
+                {{music}}
+                <span class="right">
+                    <i class="material-icons pointer" (click)="addToLocal(originalMusicList[i])">chevron_right</i>
+                </span>
+            </li>
         </ul>
     </div>
     <div class="col s4">
-        <h4>Current Music</h4>
+        <h5>Current Music</h5>
         <ul class="collection small">
-            <li *ngFor="let music of localMusicList" class="collection-item">{{music}}</li>
+            <li *ngFor="let music of localMusicList; let i = index" class="collection-item truncate">
+                {{music}}
+                <span class="right">
+                    <i *ngIf="i > 0" class="material-icons pointer" (click)="swapLocal(i, i-1)">arrow_drop_up</i>
+                    <i *ngIf="i < localMusicList.length - 1" class="material-icons pointer" (click)="swapLocal(i, i+1)">arrow_drop_down</i>
+                    <i class="material-icons pointer" (click)="removeLocal(i)">remove</i>
+                </span>
+            </li>
         </ul>
     </div>
     <div class="col s4">
-        <h4>Workspace Music</h4>
+        <h5>Workspace Music</h5>
         <ul class="collection small">
-            <li *ngFor="let music of workspaceMusicList" class="collection-item">{{music}}</li>
+            <li *ngFor="let music of workspaceMusicList; let i = index" class="collection-item truncate">
+                {{music}}
+                <span class="right">
+                    <i class="material-icons pointer" (click)="addToLocal(workspaceMusicList[i])">chevron_left</i>
+                </span>
+            </li>
         </ul>
     </div>
 </div>

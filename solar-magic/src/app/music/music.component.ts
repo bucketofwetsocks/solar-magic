@@ -112,6 +112,18 @@ export class MusicComponent implements OnInit {
     this.filterName = '';
   }
 
+  public swapLocal(first: number, second: number) {
+    const firstData = this.localMusicList[first];
+    this.localMusicList[first] = this.localMusicList[second];
+    this.localMusicList[second] = firstData;
+  }
 
+  public addToLocal(item: string) {
+    this.localMusicList.push(item);
+  }
+
+  public removeLocal(index: number) {
+    this.localMusicList.splice(index, 1);
+  }
 
 }

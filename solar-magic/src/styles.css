@@ -27,4 +27,9 @@ table {
 
 .collection.small > .collection-item {
     padding: 3px 6px;
+    line-height: 2.5rem;
+}
+
+.collection.small .material-icons {
+    font-size: 24px;
 }
