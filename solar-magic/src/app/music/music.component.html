@@ -25,12 +25,11 @@
     </div>
     <div class="col s4">
         <h5>Current Music</h5>
-        <ul class="collection small">
-            <li *ngFor="let music of localMusicList; let i = index" class="collection-item truncate">
+        <ul cdkDropList class="collection small drop-list" (cdkDropListDropped)="drop($event)">
+            <li cdkDrag *ngFor="let music of localMusicList; let i = index" class="collection-item truncate drop-item pointer">
+                <div *cdkDragPlaceholder class="drop-placeholder"></div>
                 {{music}}
                 <span class="right">
-                    <i *ngIf="i > 0" class="material-icons pointer" (click)="swapLocal(i, i-1)">arrow_drop_up</i>
-                    <i *ngIf="i < localMusicList.length - 1" class="material-icons pointer" (click)="swapLocal(i, i+1)">arrow_drop_down</i>
                     <i class="material-icons pointer" (click)="removeLocal(i)">remove</i>
                 </span>
             </li>

@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { AddMusicKService } from '../add-music-k.service';
 import { MusicResult } from '../models/MusicResult';
@@ -136,5 +137,10 @@ export class MusicComponent implements OnInit {
       M.toast({html: `<span class="card-panel red lighten-2">${result.error}</span>`})
     }
   }
+
+  public drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.localMusicList, event.previousIndex, event.currentIndex);
+  }
+
 
 }
