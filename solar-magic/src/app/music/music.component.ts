@@ -96,10 +96,6 @@ export class MusicComponent implements OnInit {
       });
   }
 
-  /**
-   * todo: this needs to move to music service, or file service, or workspace service.
-   * something else. perhaps the go fuck yourself service.
-   */
   public downloadSong(item: MusicResult) {
     this.musicService.downloadSongIntoWorkspace(item);
     this.workspaceMusicList = this.addMusicKService.getWorkspaceList();
@@ -124,6 +120,14 @@ export class MusicComponent implements OnInit {
 
   public removeLocal(index: number) {
     this.localMusicList.splice(index, 1);
+  }
+
+  public save() {
+    
+  }
+
+  public saveAndRun() {
+
   }
 
 }

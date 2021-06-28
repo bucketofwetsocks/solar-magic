@@ -69,6 +69,12 @@ export class WorkspaceService {
     }
   }
   
+  public getWorkspaceFolder(): string | undefined {
+    if (!this.workspaceConfig?.currentWorkspace)
+      return undefined;
+    return path.dirname(this.workspaceConfig?.currentWorkspace);
+  }
+
   /**
    * loads a workspace folder and kicks off an event when successful.
    */
@@ -112,9 +118,9 @@ export class WorkspaceService {
    * just returns the music folder of the current workspace.
    */
   public getMusicFolder(): string {
-    if (!this.workspaceConfig?.currentWorkspace)
+    const root = this.getWorkspaceFolder();
+    if (!root)
       throw new Error(`getMusicFolder(): No music folder. Workspace not loaded.`);
-    const root = this.workspaceConfig?.currentWorkspace;
     return path.normalize(this.workspaceConfig?.integrations.music.path.replace('{projectDir}', root));
   }
 
@@ -139,10 +145,10 @@ export class WorkspaceService {
    * builds the music folder as needed.
    */
   public buildMusicFolder() {
-    if (!this.workspaceConfig?.currentWorkspace)
+    const root = this.getWorkspaceFolder()
+    if (!root)
       return;
     const musicResourceFolder = path.join(__dirname, 'resources/workspaceTemplates/music');
-    const root = this.workspaceConfig?.currentWorkspace;
     const dest =  path.normalize(this.workspaceConfig?.integrations.music.path.replace('{projectDir}', root));
     fse.copySync(musicResourceFolder, dest);
   }
