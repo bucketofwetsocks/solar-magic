@@ -68,15 +68,31 @@ export class BlocksService {
     items.shift();
     
     // parse out all of the gallery links from the gallery page.
+    // we then insert them into a id => link map for lookup later.
+    // lol groot.
     const groot = parse(galleryHtml);
+    const allAnchors = groot.querySelectorAll('td.cell1.center a');
+    const previewLinkMap = allAnchors.map((a) => {
+      const id = a.attributes['href']?.split('=').pop();
+      const plink = `https:${a.querySelector('img')?.attributes['src']}`;
+      return {
+        id: id,
+        link: plink
+      };
+    });
+      
     const allLinks = groot.querySelectorAll('td.cell1.center')
-      .map((td) => td.querySelector('a').attributes['href']);
+      .map((td) => td.querySelector('img').attributes['src']);
+
+    console.log(`asdfasdsfda`);
+    console.dir(allLinks);
 
     // parse out information.  Here's the example page:
     // https://www.smwcentral.net/?p=section&s=smwblocks
-    const music: BlocksResult[] = [];
+    const blocks: BlocksResult[] = [];
     for (const item of items) {
       const tds = item.querySelectorAll('td');
+      const itemId = tds[0]?.querySelector('a').attributes['href']?.split('=').pop() as string;
       const result: BlocksResult = {
         title: this.cleanString(tds[0]?.querySelector('a')?.innerText),
         actAs: this.cleanString(tds[1]?.innerText),
@@ -86,18 +102,14 @@ export class BlocksService {
         rating: this.cleanString(tds[5]?.innerText),
         size: this.cleanString(tds[6]?.innerText),
         downloadLink: `https:${tds[7]?.querySelector('a')?.attributes['href']}`,
-        id: tds[0]?.querySelector('a').attributes['href']?.split('=').pop() as string,
-        previewLink: ''
+        id: itemId,
+        previewLink: previewLinkMap.find(pl => pl.id === itemId)?.link as string
       };
 
-      // now we need to find the previewlink for the image display. 
-      // it will be located in the gallery page.
-      result.previewLink = allLinks.find((l) => l.indexOf(item.id)) as string;
-
-      music.push(result);
+      blocks.push(result);
     }
 
-    result.results = music;
+    result.results = blocks;
     console.log(`blocks.service: data`);
     console.dir(result);
     return result;
