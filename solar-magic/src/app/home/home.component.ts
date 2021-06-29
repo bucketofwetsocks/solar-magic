@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   public currentLoadedWorkspace: string = '';
 
   public checkMusicErrors: string[] = [];
+  public checkBlocksErrors: string[] = [];
+
 
   constructor(
     public workspaceService: WorkspaceService,
@@ -59,10 +61,16 @@ export class HomeComponent implements OnInit {
 
   public checkWorkspace() {
     this.checkMusicErrors = this.workspaceService.checkMusicFolder();
+    this.checkBlocksErrors = this.workspaceService.checkBlocksFolder();
   }
 
   public buildMusicFolder() {
     this.workspaceService.buildMusicFolder();
-    this.checkMusicErrors = this.workspaceService.checkMusicFolder();
+    this.checkWorkspace();
+  }
+
+  public buildBlocksFolder() {
+    this.workspaceService.buildBlocksFolder();
+    this.checkWorkspace();
   }
 }

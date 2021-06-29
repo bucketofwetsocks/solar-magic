@@ -154,6 +154,24 @@ export class WorkspaceService {
     return errors;
   }
 
+
+  /**
+   * check's the Blocks folder for gps, and overall health.
+   */
+  public checkBlocksFolder(): string[] {
+    if (!this.workspaceConfig?.currentWorkspace)
+      return [];
+    const blocksFolder = this.getBlocksFolder();
+    const gps = path.join(blocksFolder, 'gps.exe');
+    const errors: string[] = [];
+    if (!fs.existsSync(blocksFolder))
+      errors.push(`The blocks path '${blocksFolder}' does not exist.`);
+    if (!fs.existsSync(gps))
+      errors.push(`GPS at location '${gps}' does not exist.`);
+
+    return errors;
+  }
+
   /**
    * builds the music folder as needed.
    */
@@ -165,5 +183,18 @@ export class WorkspaceService {
     const dest =  path.normalize(this.workspaceConfig?.integrations.music.path.replace('{projectDir}', root));
     fse.copySync(musicResourceFolder, dest);
   }
+
+  /**
+   * builds the blocks folder as needed.
+   */
+  public buildBlocksFolder() {
+    const root = this.getWorkspaceFolder()
+    if (!root)
+      return;
+    const musicResourceFolder = path.join(__dirname, 'resources/workspaceTemplates/blocks');
+    const dest =  path.normalize(this.workspaceConfig?.integrations.blocks.path.replace('{projectDir}', root));
+    fse.copySync(musicResourceFolder, dest);
+  }
+  
 
 }

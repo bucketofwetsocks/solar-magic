@@ -75,7 +75,7 @@
                 <img *ngIf="!item.previewLink.includes('no_image')" src="{{item.previewLink}}">
             </td>
             <td class="inline-list">
-                <i class="material-icons pointer" title="download">file_download</i>
+                <i class="material-icons pointer" (click)="downloadBlock(item)" title="download">file_download</i>
             </td>
         </tr>
     </tbody>

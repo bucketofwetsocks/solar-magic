@@ -51,6 +51,10 @@ export class BlocksComponent implements OnInit {
       });
   }
 
+  public downloadBlock(block: BlocksResult) {
+    this.blocksService.downloadBlockIntoWorkspace(block);
+  }
+
   public save() {
 
   }
