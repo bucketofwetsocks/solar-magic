@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
   }
 
   public openGithub() {
-    exec("start https://github.com/bresheske/solar-magic");
+    exec("start https://github.com/bucketofwetsocks/solar-magic");
   }
 
   public newWorkspace() {
