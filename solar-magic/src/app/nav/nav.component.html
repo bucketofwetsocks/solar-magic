@@ -1,5 +1,13 @@
 <div class="collection">
     <a routerLink="home" routerLinkActive="active" class="collection-item">Home</a>
-    <a *ngIf="currentLoadedWorkspace" routerLink="music" routerLinkActive="active" class="collection-item">Music</a>
-    <a *ngIf="!currentLoadedWorkspace" class="collection-item disabled">Music</a>
+    <ng-container *ngIf="currentLoadedWorkspace">
+        <a routerLink="music" routerLinkActive="active" class="collection-item">Music</a>
+        <a routerLink="blocks" routerLinkActive="active" class="collection-item">Blocks</a>
+
+    </ng-container>
+    <ng-container *ngIf="!currentLoadedWorkspace">
+        <a class="collection-item disabled">Music</a>
+        <a class="collection-item disabled">Blocks</a>
+
+    </ng-container>
 </div>

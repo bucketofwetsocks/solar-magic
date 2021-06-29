@@ -3,6 +3,9 @@ export interface Workspace {
     integrations: {
         music: {
             path: string
+        },
+        blocks: {
+            path: string;
         }
     }
 };

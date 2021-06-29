@@ -21,6 +21,9 @@ export class WorkspaceService {
     integrations: {
       music: {
         path: '{projectDir}/music',
+      },
+      blocks: {
+        path: '{projectDir}/blocks',
       }
     }
   };
@@ -112,6 +115,16 @@ export class WorkspaceService {
     else {
       throw new Error("Directory does not exist.");
     }
+  }
+
+  /**
+   * just returns the music folder of the current workspace.
+   */
+   public getBlocksFolder(): string {
+    const root = this.getWorkspaceFolder();
+    if (!root)
+      throw new Error(`getBlocksFolder(): No blocks folder. Workspace not loaded.`);
+    return path.normalize(this.workspaceConfig?.integrations.blocks.path.replace('{projectDir}', root));
   }
 
   /**
