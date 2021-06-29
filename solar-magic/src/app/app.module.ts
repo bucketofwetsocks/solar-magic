@@ -13,6 +13,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { FormsModule, NgModel } from '@angular/forms';
 import { WorkspaceService } from './workspace.service';
 import { TestService } from './test.service';
+import { BlocksComponent } from './blocks/blocks.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TestService } from './test.service';
     HomeComponent,
     NavComponent,
     MusicComponent,
-    LoaderComponent
+    LoaderComponent,
+    BlocksComponent
   ],
   imports: [
     BrowserModule,
