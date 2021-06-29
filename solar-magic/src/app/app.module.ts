@@ -15,6 +15,7 @@ import { WorkspaceService } from './workspace.service';
 import { TestService } from './test.service';
 import { BlocksComponent } from './blocks/blocks.component';
 import { BlocksService } from './blocks.service';
+import { StringService } from './string.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { BlocksService } from './blocks.service';
     MusicService,
     WorkspaceService,
     TestService,
-    BlocksService
+    BlocksService,
+    StringService
   ],
   bootstrap: [AppComponent]
 })

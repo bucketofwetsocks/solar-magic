@@ -7,6 +7,7 @@ import { parse } from 'node-html-parser';
 import { FileService } from './file.service';
 import { WorkspaceService } from './workspace.service';
 import { SearchResult } from './models/SearchResult';
+import { StringService } from './string.service';
 
 const path = (<any>window).require('path');
 
@@ -24,20 +25,9 @@ export class MusicService {
   constructor(
     private http: HttpClient,
     private fileService: FileService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private stringService: StringService
   ) { }
-
-  /**
-   * Values from SMWCentral come back with a lot of garbage it seems.
-   * This just removes all of that.
-   */
-  private cleanString(val: string): string {
-    if (!val)
-      return val;
-    return val
-      .replace(/\n/g, '')
-      .replace(/\t/g, '')
-  }
 
   /**
    * parses out the HTML from SMWCentral and returns a MusicResult[].
@@ -79,17 +69,17 @@ export class MusicService {
     for (const item of items) {
       const tds = item.querySelectorAll('td');
       const result: MusicResult = {
-        title: this.cleanString(tds[0]?.querySelector('.cell-icon-aside a')?.innerText),
+        title: this.stringService.cleanString(tds[0]?.querySelector('.cell-icon-aside a')?.innerText),
         link: tds[0]?.querySelector('.cell-icon-aside a')?.attributes['href'],
-        type: this.cleanString(tds[1]?.innerText),
-        sampleUsage: this.cleanString(tds[2]?.innerText),
-        source: this.cleanString(tds[3]?.innerText),
-        duration: this.cleanString(tds[4]?.innerText),
-        featured: this.cleanString(tds[5]?.innerText),
-        description: this.cleanString(tds[6]?.innerText),
-        authors: this.cleanString(tds[7]?.querySelector('.un-outer a')?.innerText),
-        rating: this.cleanString(tds[8]?.innerText),
-        size: this.cleanString(tds[9]?.innerText),
+        type: this.stringService.cleanString(tds[1]?.innerText),
+        sampleUsage: this.stringService.cleanString(tds[2]?.innerText),
+        source: this.stringService.cleanString(tds[3]?.innerText),
+        duration: this.stringService.cleanString(tds[4]?.innerText),
+        featured: this.stringService.cleanString(tds[5]?.innerText),
+        description: this.stringService.cleanString(tds[6]?.innerText),
+        authors: this.stringService.cleanString(tds[7]?.querySelector('.un-outer a')?.innerText),
+        rating: this.stringService.cleanString(tds[8]?.innerText),
+        size: this.stringService.cleanString(tds[9]?.innerText),
         downloadLink: `https:${tds[10]?.querySelector('a')?.attributes['href']}`,
         spcId: tds[0]?.querySelector('.cell-icon-wrapper a')?.attributes['data-spc-file']
       };

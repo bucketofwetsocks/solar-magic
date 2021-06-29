@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { WorkspaceService } from './workspace.service';
 import { FileService } from './file.service';
-
+import { StringService } from './string.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,20 +18,9 @@ export class BlocksService {
   constructor(
     private http: HttpClient,
     private workspaceService: WorkspaceService,
-    private fileService: FileService
+    private fileService: FileService,
+    private stringService: StringService
   ) { }
-
-  /**
-   * Values from SMWCentral come back with a lot of garbage it seems.
-   * This just removes all of that.
-   */
-   private cleanString(val: string): string {
-    if (!val)
-      return val;
-    return val
-      .replace(/\n/g, '')
-      .replace(/\t/g, '')
-  }
 
   /**
    * parses out the HTML from SMWCentral and returns a MusicResult[].
@@ -91,13 +80,13 @@ export class BlocksService {
       const tds = item.querySelectorAll('td');
       const itemId = tds[0]?.querySelector('a').attributes['href']?.split('=').pop() as string;
       const result: BlocksResult = {
-        title: this.cleanString(tds[0]?.querySelector('a')?.innerText),
-        actAs: this.cleanString(tds[1]?.innerText),
-        includesGfx: this.cleanString(tds[2]?.innerText),
-        description: this.cleanString(tds[3]?.innerText),
-        authors: this.cleanString(tds[4]?.querySelector('a')?.innerText),
-        rating: this.cleanString(tds[5]?.innerText),
-        size: this.cleanString(tds[6]?.innerText),
+        title: this.stringService.cleanString(tds[0]?.querySelector('a')?.innerText),
+        actAs: this.stringService.cleanString(tds[1]?.innerText),
+        includesGfx: this.stringService.cleanString(tds[2]?.innerText),
+        description: this.stringService.cleanString(tds[3]?.innerText),
+        authors: this.stringService.cleanString(tds[4]?.querySelector('a')?.innerText),
+        rating: this.stringService.cleanString(tds[5]?.innerText),
+        size: this.stringService.cleanString(tds[6]?.innerText),
         downloadLink: `https:${tds[7]?.querySelector('a')?.attributes['href']}`,
         id: itemId,
         previewLink: previewLinkMap.find(pl => pl.id === itemId)?.link as string
