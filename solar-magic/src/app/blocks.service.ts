@@ -84,9 +84,6 @@ export class BlocksService {
     const allLinks = groot.querySelectorAll('td.cell1.center')
       .map((td) => td.querySelector('img').attributes['src']);
 
-    console.log(`asdfasdsfda`);
-    console.dir(allLinks);
-
     // parse out information.  Here's the example page:
     // https://www.smwcentral.net/?p=section&s=smwblocks
     const blocks: BlocksResult[] = [];
@@ -110,8 +107,6 @@ export class BlocksService {
     }
 
     result.results = blocks;
-    console.log(`blocks.service: data`);
-    console.dir(result);
     return result;
   }
 
