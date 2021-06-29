@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { MusicResult } from './models/MusicResult';
 import { map } from 'rxjs/operators'
 import { parse } from 'node-html-parser';
-import { MusicSearch } from './models/MusicSearch';
 import { FileService } from './file.service';
 import { WorkspaceService } from './workspace.service';
+import { SearchResult } from './models/SearchResult';
 
 const path = (<any>window).require('path');
 
@@ -42,11 +42,11 @@ export class MusicService {
   /**
    * parses out the HTML from SMWCentral and returns a MusicResult[].
    */
-  private parseResults(html: string, page: number): MusicSearch {
+  private parseResults(html: string, page: number): SearchResult<MusicResult> {
     const root = parse(html);
 
     // parse the table's metadata about pagination.
-    const result = {} as MusicSearch;
+    const result = {} as SearchResult<MusicResult>;
     const stats = root.querySelectorAll('.stats');
 
     const totalCount = parseInt(stats[2].innerText);
@@ -104,7 +104,7 @@ export class MusicService {
   /**
    * perform an HTTP request to swmcentral and parse the music results.
    */
-  public searchMusic(name: string, tags: string, description: string, page: number) : Observable<MusicSearch> {
+  public searchMusic(name: string, tags: string, description: string, page: number) : Observable<SearchResult<MusicResult>> {
     return this.http.get(
         `${this.ROOT_URL}&f%5Bname%5D=${name}&f%5Bauthor%5D=&f%5Btags%5D=${tags}&f%5Bfeatured%5D=&f%5Bdescription%5D=${description}&n=${page}`,
         {responseType: 'text'}

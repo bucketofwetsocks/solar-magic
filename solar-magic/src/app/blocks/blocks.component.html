@@ -1,1 +1,81 @@
-<p>blocks works!</p>
+<div class="row">
+    <div class="col s12">
+        <h2>Workspace Blocks</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 item-row">
+        <button class="waves-effect waves-light btn" (click)="save()">Save</button>
+        <button class="waves-effect waves-light btn" (click)="saveAndRun()">Save and Execute</button>
+    </div>
+</div>
+
+<!-- TODO workspace blocks here. -->
+
+<div class="row">
+    <div class="col s12">
+        <div class="divider"></div>
+        <h2>SMWCentral Blocks</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="input-field col s4">
+        <input placeholder="super metroid" type="text" [(ngModel)]="filterName">
+        <label for="first_name" class="active">Title</label>
+    </div>
+    <div class="input-field col s4">
+        <input placeholder="environment" type="text" [(ngModel)]="filterDescription">
+        <label for="first_name" class="active">Description</label>
+    </div>
+    <div class="input-field col s4">
+        <input placeholder="creepy" type="text" [(ngModel)]="filterTags">
+        <label for="first_name" class="active">Tags</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12 item-row">
+        <a class="waves-effect waves-light btn" (click)="clear()">Clear</a>
+        <a class="waves-effect waves-light btn" (click)="search()">Search</a>
+    </div>
+</div>
+
+<div class="divider"></div>
+<app-loader *ngIf="loading"></app-loader>
+
+<ul *ngIf="!loading" class="pagination item-row">
+    <li class="{{ blocksSearch.pagination.requestedPage <= 1 ? 'disabled' : 'active pointer' }}" (click)="search(blocksSearch.pagination.requestedPage - 1)"><a><i class="material-icons">chevron_left</i></a></li>
+    <ng-container *ngFor="let number of paginationList">
+        <li class="{{ blocksSearch.pagination.requestedPage === number ? 'disabled' : 'active pointer' }}" (click)="search(number)"><a>{{number}}</a></li>
+    </ng-container>
+    <li class="{{ blocksSearch.pagination.requestedPage >= blocksSearch.pagination.totalPages ? 'disabled' : 'active pointer' }}" (click)="search(blocksSearch.pagination.requestedPage + 1)"><a><i class="material-icons">chevron_right</i></a></li>
+</ul>
+
+<table *ngIf="!loading" class="highlight">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Act As</th>
+            <th>Includes Gfx</th>
+            <th>Description</th>
+            <th>Rating</th>
+            <th>Size</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of blocksSearch.results">
+            <td>{{item.title}}</td>
+            <td>{{item.actAs}}</td>
+            <td>{{item.includesGfx}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.rating}}</td>
+            <td>{{item.size}}</td>
+            <td class="inline-list">
+                <i class="material-icons pointer" title="download">file_download</i>
+            </td>
+        </tr>
+    </tbody>
+</table>
+

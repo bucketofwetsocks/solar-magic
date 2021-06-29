@@ -2,8 +2,9 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { AddMusicKService } from '../add-music-k.service';
 import { MusicResult } from '../models/MusicResult';
-import { MusicSearch } from '../models/MusicSearch';
+import { SearchResult } from '../models/SearchResult';
 import { MusicService } from '../music.service';
+import { PaginationService } from '../pagination.service';
 
 const M = (<any>window).M;
 const path = (<any>window).require('path');
@@ -14,7 +15,7 @@ const path = (<any>window).require('path');
   styleUrls: ['./music.component.css']
 })
 export class MusicComponent implements OnInit {
-  public musicSearch = {} as MusicSearch;
+  public musicSearch = {} as SearchResult<MusicResult>;
   public loading: boolean = false;
   public paginationList: number[] = [];
   
@@ -28,7 +29,8 @@ export class MusicComponent implements OnInit {
 
   constructor(
     private musicService: MusicService,
-    private addMusicKService: AddMusicKService
+    private addMusicKService: AddMusicKService,
+    private paginationService: PaginationService
   ) { }
 
   ngOnInit(): void {
@@ -39,38 +41,6 @@ export class MusicComponent implements OnInit {
     this.search(1);
   }
 
-  private generatePaginationList(searchResult: MusicSearch) {
-    const RADIUS = 4;
-    const MIN = 1;
-    const result = [];
-
-    // first go down
-    let current = searchResult.pagination.requestedPage - RADIUS;
-    while (current !== searchResult.pagination.requestedPage) {
-      if (current >= MIN)
-        result.push(current);
-      current++;
-    }
-
-    // now push the current page
-    result.push(current);
-    
-    // now go up
-    current++;
-    const end = current + RADIUS;
-    while (current !== end) {
-      if (current <= searchResult.pagination.totalPages)
-        result.push(current);
-      current++;
-    }
-
-    console.log(`music.component: pagination list: ${result}`);
-    console.log(`music.component: pagination values: `);
-    console.dir(searchResult.pagination);
-
-    this.paginationList = result;
-  }
-
   public search(page?: number) {
     console.log(`music.component: searching...`);
     if (!page)
@@ -79,7 +49,7 @@ export class MusicComponent implements OnInit {
     this.loading = true;
     this.musicService.searchMusic(this.filterName, this.filterDescription, this.filterTags, page)
       .subscribe((music) => {
-        this.generatePaginationList(music);
+        this.paginationList = this.paginationService.generatePaginationList(music);
         this.musicSearch = music;
         this.loading = false;
         console.log(`music.component: Loaded Music: ${this.musicSearch.results.length}`);

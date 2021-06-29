@@ -14,6 +14,7 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { WorkspaceService } from './workspace.service';
 import { TestService } from './test.service';
 import { BlocksComponent } from './blocks/blocks.component';
+import { BlocksService } from './blocks.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { BlocksComponent } from './blocks/blocks.component';
   providers: [
     MusicService,
     WorkspaceService,
-    TestService
+    TestService,
+    BlocksService
   ],
   bootstrap: [AppComponent]
 })
